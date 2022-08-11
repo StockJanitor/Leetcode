@@ -3,10 +3,10 @@ class Solution:
 
         #get length of s
         N = len(s)
-        
+
         # two pointer left l, and right r
         def LP(l,r):
-
+            
             # loop if l is more than 0, r is less than length
             while r < N and l >=0:
 

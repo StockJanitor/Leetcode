@@ -1,7 +1,6 @@
 class Solution:
     def isPalindrome(self, x: int) -> bool:
 
-        
         if (x <0) or (x > 2147483647):
             return False
         
@@ -9,7 +8,6 @@ class Solution:
         div = 1 
         while x >= 10 * div:
             div *=10
-            
             
         # num % 10, gets the right number removes left number,, 
         # num // 10 gets the left number, removes right number,,
@@ -33,6 +31,9 @@ class Solution:
 
 class Solution:
     def isPalindrome(self, x: int) -> bool:
-        return str(x) == str(x)[::-1]
+        if (x > 2147483647):
+            return False
+        else:
+            return str(x) == str(x)[::-1]
 
 '''
