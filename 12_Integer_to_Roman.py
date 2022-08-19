@@ -18,3 +18,4 @@ class Solution:
                 num = num % i
                 
         return res
+
