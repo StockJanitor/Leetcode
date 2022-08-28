@@ -6,7 +6,7 @@ class Solution:
 		new_num1 =0
 		new_num2=0
 		
-		def make_num(x,y)
+		def make_num(x,y):
 			for i in x:
 				ind = list_str.index(i)
 				y= y*10 + ind
