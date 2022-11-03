@@ -46,7 +46,6 @@ int partition(int numbers[], int i, int k)
             l++;
             h--;
         }
-
     }
     // return the last index, so we can specify partitions
     return h;

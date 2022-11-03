@@ -39,7 +39,7 @@ void Swap(int nums[], int j, int k)
 // Sort numbers
 /* TODO: Count comparisons and swaps.
          Output the array at the end of each iteration. */
-void InsertionSort(int numbers[], int size)
+void InsertionSort(int numbers[], int size, int &swaps, int &compare)
 {
     int i;
     int j;
@@ -47,17 +47,40 @@ void InsertionSort(int numbers[], int size)
     for (i = 1; i < size; ++i)
     {
         j = i;
-        while (j > 0 && numbers[j] < numbers[j - 1])
+
+
+        // if j smaller swap, swap j with j-1
+        while (j>0)
         {
-            Swap(numbers, j, j - 1);
-            swaps += 1;
-            --j;
+            compare++;
+            if (j > 0 && numbers[j] < numbers[j - 1])
+            {
+                Swap(numbers, j, j - 1);
+                swaps += 1;
+                --j;
+            }
+            j--;
         }
+        for (int m = 0; m < size; ++m)
+        {
+            if (m != size - 1)
+            {
+                cout << numbers[m] << ' ';
+            }
+            else
+            {
+                cout << numbers[m];
+            }
+        }
+        cout << endl;
     }
 }
 
 int main()
 {
+    int swaps = 0;
+    int compare = 0;
+
     // Step 1: Read numbers into an array
     int size;
     cin >> size;                   // Read array size
@@ -68,11 +91,12 @@ int main()
     cout << endl;
 
     // Step 3: Sort the numbers array
-    InsertionSort(numbers, size);
+    InsertionSort(numbers, size, swaps, compare);
     cout << endl;
 
     // Step 4: Output the number of comparisons and swaps
     /* TODO: Output the number of comparisons and swaps performed */
-
+    cout << "comparisons: " << compare << endl;
+    cout << "swaps: " << swaps << endl;
     return 0;
 }
