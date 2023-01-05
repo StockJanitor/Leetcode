@@ -17,3 +17,5 @@ class Solution:
             # if not in dic, append current value and assign current index
             values[value] = index
         return []
+
+        
