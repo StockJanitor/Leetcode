@@ -19,6 +19,8 @@ void Display(struct Array arr)
     }
 }
 
+
+////////////////////////////////////////////// Append //////////////////////////////////////////////
 void Append(struct Array *arr, int x)
 {
     if (arr->length < arr->size)
@@ -27,6 +29,8 @@ void Append(struct Array *arr, int x)
     }
 }
 
+
+////////////////////////////////////////////// Insert //////////////////////////////////////////////
 void Insert(struct Array *arr, int index, int x)
 {
     // index msut be less than or equal to current length
@@ -38,6 +42,7 @@ void Insert(struct Array *arr, int index, int x)
             // assign current with previous value
             arr->A[i] = arr->A[i - 1];
         }
+
         // index value is = x, assign after all other variables are moved
         arr->A[index] = x;
 
@@ -46,6 +51,8 @@ void Insert(struct Array *arr, int index, int x)
     }
 }
 
+
+////////////////////////////////////////////// Delete //////////////////////////////////////////////
 int Delete(struct Array *arr, int index)
 {
     if (index >= 0 && index < arr->length)
