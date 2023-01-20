@@ -9,6 +9,14 @@ struct Array
     int length; // current length
 };
 
+////////////////////////////////////////////// Swap //////////////////////////////////////////////
+void Swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
 ////////////////////////////////////////////// Display //////////////////////////////////////////////
 void Display(struct Array arr)
 {
@@ -137,15 +145,36 @@ float Avg(struct Array arr)
     return (float)Sum(arr)/arr.length;
 }
 
+////////////////////////////////////////////// Reverse //////////////////////////////////////////////
+void Reverse(struct Array *arr)
+{
+    int *B = new int[arr->length];
+    for (int i =arr->length-1, j=0; i>=0;j++,i--)
+    {
+        B[j] = arr->A[i];
+    }
+    for (int i=0; i<arr->length;i++)
+    {
+        arr->A[i] = B[i];
+    }
+}
+void Reverse2(struct Array *arr)
+{
+    for (int i = 0,j=arr->length-1;i<j;i++,j--)
+    {
+        Swap(&arr->A[i],&arr->A[j]);
+    }
+}
 
 
 
 int main()
 {
-    struct Array arr = {{2, 3, 4, 5, 50}, 10, 5};
+    struct Array arr = {{2, 3, 4, 5, 6}, 10, 5};
     int A[5] = {2,3,4,5,6};
-    printf("%f\n", Avg(arr));
+    // printf("%f\n", Avg(arr));
     // Set(&arr, 4,5);
+    Reverse2(&arr);
     Display(arr);
 
     return 0;
