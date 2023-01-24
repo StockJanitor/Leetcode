@@ -28,7 +28,6 @@ void Display(struct Array arr)
     }
 }
 
-
 ////////////////////////////////////////////// Append //////////////////////////////////////////////
 void Append(struct Array *arr, int x)
 {
@@ -37,7 +36,6 @@ void Append(struct Array *arr, int x)
         arr->A[arr->length++] = x;
     }
 }
-
 
 ////////////////////////////////////////////// Insert //////////////////////////////////////////////
 void Insert(struct Array *arr, int index, int x)
@@ -60,7 +58,6 @@ void Insert(struct Array *arr, int index, int x)
     }
 }
 
-
 ////////////////////////////////////////////// Delete //////////////////////////////////////////////
 int Delete(struct Array *arr, int index)
 {
@@ -77,11 +74,10 @@ int Delete(struct Array *arr, int index)
     return 0;
 }
 
-
 ////////////////////////////////////////////// Get //////////////////////////////////////////////
 int Get(struct Array arr, int index)
 {
-    if (index >= 0 && index <arr.length)
+    if (index >= 0 && index < arr.length)
     {
         return arr.A[index];
     }
@@ -91,7 +87,7 @@ int Get(struct Array arr, int index)
 ////////////////////////////////////////////// Set //////////////////////////////////////////////
 void Set(struct Array *arr, int index, int x)
 {
-    if (index >= 0 && index <arr->length)
+    if (index >= 0 && index < arr->length)
     {
         arr->A[index] = x;
     }
@@ -101,9 +97,9 @@ void Set(struct Array *arr, int index, int x)
 int Max(struct Array arr)
 {
     int max = arr.A[0];
-    for (int i = 1; i <arr.length;i++)
+    for (int i = 1; i < arr.length; i++)
     {
-        if (arr.A[i]>max)
+        if (arr.A[i] > max)
         {
             max = arr.A[i];
         }
@@ -111,14 +107,13 @@ int Max(struct Array arr)
     return max;
 }
 
-
 ////////////////////////////////////////////// Min //////////////////////////////////////////////
 int Min(struct Array arr)
 {
     int min = arr.A[0];
-    for (int i = 1; i <arr.length;i++)
+    for (int i = 1; i < arr.length; i++)
     {
-        if (arr.A[i]<min)
+        if (arr.A[i] < min)
         {
             min = arr.A[i];
         }
@@ -130,51 +125,68 @@ int Min(struct Array arr)
 int Sum(struct Array arr)
 {
     int sum = 0;
-    for (int i = 0; i<arr.length;i++)
+    for (int i = 0; i < arr.length; i++)
     {
         sum += arr.A[i];
     }
     return sum;
-
 }
 
 ////////////////////////////////////////////// Avg //////////////////////////////////////////////
 float Avg(struct Array arr)
 {
     // float avg = Sum(arr)/arr.length;  // <--- this doesnt convert sum to float, must convert before divide
-    return (float)Sum(arr)/arr.length;
+    return (float)Sum(arr) / arr.length;
 }
 
 ////////////////////////////////////////////// Reverse //////////////////////////////////////////////
 void Reverse(struct Array *arr)
 {
     int *B = new int[arr->length];
-    for (int i =arr->length-1, j=0; i>=0;j++,i--)
+    for (int i = arr->length - 1, j = 0; i >= 0; j++, i--)
     {
         B[j] = arr->A[i];
     }
-    for (int i=0; i<arr->length;i++)
+    for (int i = 0; i < arr->length; i++)
     {
         arr->A[i] = B[i];
     }
 }
 void Reverse2(struct Array *arr)
 {
-    for (int i = 0,j=arr->length-1;i<j;i++,j--)
+    for (int i = 0, j = arr->length - 1; i < j; i++, j--)
     {
-        Swap(&arr->A[i],&arr->A[j]);
+        Swap(&arr->A[i], &arr->A[j]);
     }
 }
 
+////////////////////////////////////////////// Sorted //////////////////////////////////////////////
+void InsertSort(struct Array *arr, int x)
+{
 
+    int i = arr->length - 1;
+    if (arr->length == arr->size)
+    {
+        return;
+    }
+    while (i >= 0 && arr->A[i] > x)
+    {
+        arr->A[i + 1] = arr->A[i];
+        i--;
+    }
+    arr->A[i + 1] = x;
+    arr->length++;
+}
 
 int main()
 {
     struct Array arr = {{2, 3, 4, 5, 6}, 10, 5};
-    int A[5] = {2,3,4,5,6};
+    int A[5] = {2, 3, 4, 5, 6};
     // printf("%f\n", Avg(arr));
+
     // Set(&arr, 4,5);
-    Reverse2(&arr);
+    InsertSort(&arr, 3);
+
     Display(arr);
 
     return 0;
