@@ -178,16 +178,89 @@ void InsertSort(struct Array *arr, int x)
     arr->length++;
 }
 
+int isSorted(struct Array arr)
+{
+    int i;
+    for (i = 0; i < arr.length - 1; i++)
+    {
+        if (arr.A[i] > arr.A[i + 1])
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+////////////////////////////////////////////// Rearrange //////////////////////////////////////////////
+void Rearrange(struct Array *arr)
+{
+    int i, j;
+    i = 0;
+    j = arr->length - 1;
+
+    while (i < j)
+    {
+        while (arr->A[i] < 0)
+            i++;
+        while (arr->A[j] >= 0)
+            j--;
+        if (i < j)
+            Swap(&arr->A[i], &arr->A[j]);
+    }
+}
+
+
+
+
+
+
+////////////////////////////////////////////// Merge Arrays //////////////////////////////////////////////
+struct Array* Merge(struct Array *arr1,struct Array*arr2)
+{
+    int i,j,k;
+    i=j=k =0 ;
+    struct Array*arr3= (struct Array*)malloc(sizeof(struct Array));
+    while (i < arr1->length && j<arr2->length)
+    {
+        if (arr1->A[i]<arr2->A[j])
+        {
+            arr3->A[k++] = arr1->A[i++];
+        }
+        else{
+            arr3->A[k++] = arr2->A[j++];
+        }
+    }
+
+    for (;i<arr1->length;i++)
+    {
+        arr3->A[k++] = arr1->A[i];
+    }
+    for (;j<arr2->length;j++)
+    {
+        arr3->A[k++] = arr2->A[j];
+    }
+    arr3->length = arr1->length+arr2->length;
+    arr3->size=10;
+    return arr3;
+}
+
+
+
+
 int main()
 {
-    struct Array arr = {{2, 3, 4, 5, 6}, 10, 5};
+    struct Array arr1 = {{2, 6, 10, 15,25}, 10, 5};
+    struct Array arr2 = {{3, 4, 7, 18, 20}, 10, 5};
+    struct Array *arr3;
     int A[5] = {2, 3, 4, 5, 6};
-    // printf("%f\n", Avg(arr));
+    // printf("%d\n", isSorted(arr));
 
     // Set(&arr, 4,5);
-    InsertSort(&arr, 3);
+    // Rearrange(&arr);
 
-    Display(arr);
+    arr3=Merge(&arr1,&arr2);
+
+    Display(*arr3);
 
     return 0;
 }
