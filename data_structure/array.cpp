@@ -24,7 +24,7 @@ void Display(struct Array arr)
     printf("elements are\n");
     for (i = 0; i < arr.length; i++)
     {
-        printf("%d", arr.A[i]);
+        printf("%d ", arr.A[i]);
     }
 }
 
@@ -247,10 +247,133 @@ struct Array *Merge(struct Array *arr1, struct Array *arr2)
     return arr3;
 }
 
+////////////////////////////////////////////// Union Arrays //////////////////////////////////////////////
+struct Array *Union(struct Array *arr1, struct Array *arr2)
+{
+    int i, j, k;
+    i = j = k = 0;
+
+    // assign pointer to return later
+    struct Array *arr3 = (struct Array *)malloc(sizeof(struct Array));
+
+    // while i and j are in length
+    while (i < arr1->length && j < arr2->length)
+    {
+        // if arr1 is smaller, assign smaller
+        if (arr1->A[i] < arr2->A[j])
+        {
+            // 1st assign to A[k], then increment k; same applies for i
+            arr3->A[k++] = arr1->A[i++];
+        }
+        // if arr2 is smaller, assign smaller
+        else if (arr2->A[j] < arr1->A[i])
+        {
+            arr3->A[k++] = arr2->A[j++];
+        }
+        // if equal assign either, then increase both
+        else
+        {
+            arr3->A[k++] = arr1->A[i++];
+            j++;
+        }
+    }
+
+    // if there is any remainder, just add to arr3
+    for (; i < arr1->length; i++)
+    {
+        arr3->A[k++] = arr1->A[i];
+    }
+    for (; j < arr2->length; j++)
+    {
+        arr3->A[k++] = arr2->A[j];
+    }
+    arr3->length = k;
+    arr3->size = 10;
+    return arr3;
+}
+
+////////////////////////////////////////////// Intersection Arrays //////////////////////////////////////////////
+struct Array *Intersection(struct Array *arr1, struct Array *arr2)
+{
+    int i, j, k;
+    i = j = k = 0;
+
+    // assign pointer to return later
+    struct Array *arr3 = (struct Array *)malloc(sizeof(struct Array));
+
+    // while i and j are in length
+    while (i < arr1->length && j < arr2->length)
+    {
+        // if arr1 is smaller, assign smaller
+        if (arr1->A[i] < arr2->A[j])
+        {
+            // 1st assign to A[k], then increment k; same applies for i
+            i++;
+        }
+        // if arr2 is smaller, assign smaller
+        else if (arr2->A[j] < arr1->A[i])
+        {
+            j++;
+        }
+        // if equal assign either, then increase both
+        else
+        {
+            arr3->A[k++] = arr1->A[i++];
+            j++;
+        }
+    }
+
+    arr3->length = k;
+    arr3->size = 10;
+    return arr3;
+}
+
+////////////////////////////////////////////// Difference Arrays //////////////////////////////////////////////
+struct Array *Difference(struct Array *arr1, struct Array *arr2)
+{
+    int i, j, k;
+    i = j = k = 0;
+
+    // assign pointer to return later
+    struct Array *arr3 = (struct Array *)malloc(sizeof(struct Array));
+
+    // while i and j are in length
+    while (i < arr1->length && j < arr2->length)
+    {
+        // if arr1 is smaller, assign smaller
+        if (arr1->A[i] < arr2->A[j])
+        {
+            // 1st assign to A[k], then increment k; same applies for i
+            arr3->A[k++] = arr1->A[i++];
+        }
+        // if arr2 is smaller, assign smaller
+        else if (arr2->A[j] < arr1->A[i])
+        {
+            j++;
+        }
+        // if equal assign either, then increase both
+        else
+        {
+            i++;
+            j++;
+        }
+    }
+
+    // if there is any remainder, just add to arr3
+    for (; i < arr1->length; i++)
+    {
+        arr3->A[k++] = arr1->A[i];
+    }
+
+    arr3->length = k;
+    arr3->size = 10;
+    return arr3;
+}
+
 int main()
 {
     struct Array arr1 = {{2, 6, 10, 15, 25}, 10, 5};
-    struct Array arr2 = {{3, 4, 7, 18, 20}, 10, 5};
+    struct Array arr2 = {{3, 6, 7, 15, 20}, 10, 5};
     struct Array *arr3;
     int A[5] = {2, 3, 4, 5, 6};
     // printf("%d\n", isSorted(arr));
@@ -258,7 +381,7 @@ int main()
     // Set(&arr, 4,5);
     // Rearrange(&arr);
 
-    arr3 = Merge(&arr1, &arr2);
+    arr3 = Difference(&arr1, &arr2);
 
     Display(*arr3);
 
