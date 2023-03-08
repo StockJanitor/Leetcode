@@ -36,7 +36,7 @@ void create(int A[], int n)
     }
 }
 
-void Display(struct Node *p)
+void display(struct Node *p)
 {
     while (p != NULL)
     {
@@ -66,16 +66,16 @@ int sum(struct Node *p)
     return total + p->data;
 }
 
-void rec_display(struct Node *p)
+void display_rec(struct Node *p)
 {
     if (p != NULL)
     {
-        rec_display(p->next);
+        display_rec(p->next);
         printf("%d ", p->data);
     }
 }
 
-int rec_max(struct Node *p)
+int max_rec(struct Node *p)
 {
     int max = 0;
 
@@ -84,7 +84,7 @@ int rec_max(struct Node *p)
         return 0;
     }
 
-    max = rec_max(p->next);
+    max = max_rec(p->next);
     if (max > p->data)
     {
         return max;
@@ -104,7 +104,7 @@ struct Node *search(struct Node *p, int key)
     return search(p->next, key);
 }
 
-struct Node *transposition_search(struct Node *p, int key)
+struct Node *search_transposition(struct Node *p, int key)
 {
     struct Node *q = NULL;
     while (p != NULL)
@@ -201,15 +201,56 @@ void insert_sort(struct Node *p, int value)
         }
     }
 }
+int delete(struct Node *p, int index)
+{
+    struct Node *q=NULL;
+    int x=-1,i;
+    // if out of range, return -1
+    if (index<1||index>count(p))
+    {
+        return -1;
+    }
+    // if its 1st one
+    if (index ==1)
+    {
+        // q becomes frist
+        q = first;
+        // x assign first data
+        x=first->data;
+        // first becomes next
+        first = first->next;
+        // free q,
+        free(q);
+        // return deleted data
+        return x;
+    }
+    else
+    {
+        for (i=0;i<index-1;i++)
+        {
+            // q becomes previous node
+            q=p;
+            // move p to next, which points to index
+            p=p->next;
+            // this will stop when we hit the index
+        }
+        //assing previous node, q->next, to the one after index node
+        q->next = p->next;
+        x=p->data;
+        free(p);
+        return x;
+
+    }
+
+}
 int main()
 {
 
     int A[] = {10, 20, 30, 40, 50};
     create(A, 5);
-    Display(first);
+    delete(first,3);
+    display(first);
 
-    insert_sort(first, 15);
-    Display(first);
 
     return 0;
 }
