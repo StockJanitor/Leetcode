@@ -127,16 +127,54 @@ struct Node *transposition_search(struct Node *p, int key)
     }
 }
 
+void insert(struct Node *p, int index, int value)
+{
+    // check index
+    if (index < 0 || index > count(p))
+    {
+        return;
+    }
+    // if within index, create node
+    struct Node *t;
+    t = (struct Node *)malloc(sizeof(struct Node));
+    t->data = value;
+    int i;
+    // if index 0
+    if (index==0)
+    {
+        // current first becomes after t
+        t->next = first;
+        // first becomes t
+        first = t;
+
+    }
+    else
+    {
+        for (i = 0;i<index-1;i++)
+        {
+            // current become the next node
+            p=p->next;
+        }
+
+        // t->next points to after p
+        // p->next points to t
+        // so t is inserted after p and before p->next
+        t->next = p->next;
+        p->next = t;
+    }
+
+
+}
 int main()
 {
 
-    int A[] = {3, 5, 6, 10, 15};
-    create(A, 5);
+    int A[] = {3, 5, 6};
+    create(A, 3);
     Display(first);
     printf("\n");
 
-    printf("total: %d\ncount: %d", sum(first), count(first));
+    insert(first,2,7);
+    Display(first);
     printf("\n");
-    printf("max: %d\n", rec_max(first));
     return 0;
 }
