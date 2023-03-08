@@ -43,6 +43,7 @@ void Display(struct Node *p)
         printf("%d ", p->data);
         p = p->next;
     }
+    printf("\n");
 }
 
 int count(struct Node *p)
@@ -140,20 +141,19 @@ void insert(struct Node *p, int index, int value)
     t->data = value;
     int i;
     // if index 0
-    if (index==0)
+    if (index == 0)
     {
         // current first becomes after t
         t->next = first;
         // first becomes t
         first = t;
-
     }
     else
     {
-        for (i = 0;i<index-1;i++)
+        for (i = 0; i < index - 1; i++)
         {
             // current become the next node
-            p=p->next;
+            p = p->next;
         }
 
         // t->next points to after p
@@ -162,19 +162,54 @@ void insert(struct Node *p, int index, int value)
         t->next = p->next;
         p->next = t;
     }
+}
 
+void insert_sort(struct Node *p, int value)
+{
+    struct Node *q = NULL, *t;
+    t = (struct Node *)malloc(sizeof(struct Node));
+    t->data = value;
+    t->next = NULL;
 
+    if (first == NULL)
+    {
+        first = t;
+    }
+    else
+    {
+        // if p exists and data is less than value, we keep going
+        while (p && p->data < value)
+        {
+            // q assign p, and p becomes next
+            q = p;
+            p = p->next;
+
+            // this will stop if value becomes greater than p->data, so the q will be previous node, and p will be next node that has larger data
+        }
+        if (p == first)
+        {
+            // if p is the first node, we insert data into left of it
+            t->next = first;
+            first = t;
+        }
+        else
+        {
+            // current q->next will be after t
+            t->next = q->next;
+            // q->next will be t
+            q->next = t;
+        }
+    }
 }
 int main()
 {
 
-    int A[] = {3, 5, 6};
-    create(A, 3);
+    int A[] = {10, 20, 30, 40, 50};
+    create(A, 5);
     Display(first);
-    printf("\n");
 
-    insert(first,2,7);
+    insert_sort(first, 15);
     Display(first);
-    printf("\n");
+
     return 0;
 }
