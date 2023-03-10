@@ -203,20 +203,20 @@ void insert_sort(struct Node *p, int value)
 }
 int delete(struct Node *p, int index)
 {
-    struct Node *q=NULL;
-    int x=-1,i;
+    struct Node *q = NULL;
+    int x = -1, i;
     // if out of range, return -1
-    if (index<1||index>count(p))
+    if (index < 0 || index > count(p))
     {
         return -1;
     }
     // if its 1st one
-    if (index ==1)
+    if (index == 0)
     {
         // q becomes frist
         q = first;
         // x assign first data
-        x=first->data;
+        x = first->data;
         // first becomes next
         first = first->next;
         // free q,
@@ -226,31 +226,64 @@ int delete(struct Node *p, int index)
     }
     else
     {
-        for (i=0;i<index-1;i++)
+        for (i = 0; i < index; i++)
         {
             // q becomes previous node
-            q=p;
+            q = p;
             // move p to next, which points to index
-            p=p->next;
+            p = p->next;
             // this will stop when we hit the index
         }
-        //assing previous node, q->next, to the one after index node
+        // assing previous node, q->next, to the one after index node
         q->next = p->next;
-        x=p->data;
+        x = p->data;
         free(p);
         return x;
+    }
+}
 
+int check_sorted(struct Node *p)
+{
+    // this is the min value for 4 byte int
+    int x = -65536;
+    while (p != NULL)
+    {
+        if (x > p->data)
+        {
+            return 0;
+        }
+        x = p->data;
+        p = p->next;
     }
 
+    return 1;
+}
+void remove_duplicate(struct Node *p)
+{
+    struct Node *q = p->next;
+    int x;
+    while (q != NULL)
+    {
+        if (q->data == p->data)
+        {
+            p->next = q->next;
+            free(q);
+            q = p->next;
+        }
+        else
+        {
+            p = q;
+            q = q->next;
+        }
+    }
 }
 int main()
 {
 
-    int A[] = {10, 20, 30, 40, 50};
+    int A[] = {10, 20, 20, 40, 50};
     create(A, 5);
-    delete(first,3);
+    remove_duplicate(first);
     display(first);
-
 
     return 0;
 }
