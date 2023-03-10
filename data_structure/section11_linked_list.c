@@ -277,6 +277,33 @@ void remove_duplicate(struct Node *p)
         }
     }
 }
+void reverse_sliding_pointer(struct Node *p)
+{
+    struct Node *q=NULL, *r=NULL;
+    while(p!=NULL)
+    {
+        r=q;
+        q=p;
+        p=p->next;
+        q->next = r;
+
+    }
+    first = q;
+
+}
+void reverse_recursive(struct Node *q, struct Node *p)
+{
+    if (p)
+    {
+        reverse_recursive(p, p->next);
+        p->next = q;
+        
+    }
+    else 
+    {
+        first = q;
+    }
+}
 int main()
 {
 
