@@ -6,7 +6,7 @@ struct Node
     int data;
     struct Node *next;
 
-} *first = NULL;
+} *first = NULL, *second = NULL, *third = NULL;
 
 void create(int A[], int n)
 {
@@ -20,6 +20,33 @@ void create(int A[], int n)
     first->next = NULL;
     // last is first node now
     last = first;
+
+    for (i = 1; i < n; i++)
+    {
+        // create t in heap as Node
+        t = (struct Node *)malloc(sizeof(struct Node));
+        // assign current data
+        t->data = A[i];
+        t->next = NULL;
+
+        // current last's next will be t,
+        last->next = t;
+        // we over write current last to t
+        last = t;
+    }
+}
+void create2(int A[], int n)
+{
+    int i;
+    struct Node *t, *last;
+    // create first Node in heap
+    second = (struct Node *)malloc(sizeof(struct Node));
+    // assign 1st data
+    second->data = A[0];
+    // next is NULL
+    second->next = NULL;
+    // last is second node now
+    last = second;
 
     for (i = 1; i < n; i++)
     {
@@ -279,17 +306,15 @@ void remove_duplicate(struct Node *p)
 }
 void reverse_sliding_pointer(struct Node *p)
 {
-    struct Node *q=NULL, *r=NULL;
-    while(p!=NULL)
+    struct Node *q = NULL, *r = NULL;
+    while (p != NULL)
     {
-        r=q;
-        q=p;
-        p=p->next;
+        r = q;
+        q = p;
+        p = p->next;
         q->next = r;
-
     }
     first = q;
-
 }
 void reverse_recursive(struct Node *q, struct Node *p)
 {
@@ -297,20 +322,106 @@ void reverse_recursive(struct Node *q, struct Node *p)
     {
         reverse_recursive(p, p->next);
         p->next = q;
-        
     }
-    else 
+    else
     {
         first = q;
     }
 }
+void concat(struct Node *p, struct Node *q)
+{
+    third = p;
+    while (p->next != NULL)
+    {
+        p = p->next;
+    }
+    p->next = q;
+}
+
+void merge(struct Node *p, struct Node *q)
+{
+    struct Node *last;
+    // determine third and last Node
+    // third and last is the first Node
+    // p or q have become the next Node
+    if (p->data < q->data)
+    {
+        third = last = p;
+        p = p->next;
+        third->next = NULL;
+    }
+    else
+    {
+        third = last = q;
+        q = q->next;
+        third->next = NULL;
+    }
+
+    // loop through to merge, if q and p both exists
+    while (p && q)
+    {
+        // if p is smaller, last->next becomes p
+        // last becomes p, p becomes p->next
+        // last->next becomes NULL
+        if (p->data < q->data)
+        {
+            last->next = p;
+            last = p;
+            p = p->next;
+            last->next = NULL;
+        }
+        else
+        {
+            last->next = q;
+            last = q;
+            q = q->next;
+            last->next = NULL;
+        }
+    }
+    if (p)
+        last->next = p;
+    if (q)
+        last->next = q;
+}
+
+int isLoop(struct Node *f)
+{
+    struct Node *p,*q;
+    p=q=f;
+
+    do
+    {
+        // move p to next
+        p=p->next;
+        // move q to next
+        q=q->next;
+        // if q not NULL, move next, if q is NULL stay NULL
+        q=q?q->next:q;
+
+        // while p, q, and q !=q; both not NULL and not equal, keep looping
+    } while (p && q && p!=q);
+
+    // if they are equal, then isLoop 
+    if(p==q)
+        return 1;
+    else
+        return 0;
+    
+}
+
 int main()
 {
+    struct Node *t1,*t2;
 
-    int A[] = {10, 20, 20, 40, 50};
+    int A[] = {10, 20, 30, 40, 50};
     create(A, 5);
-    remove_duplicate(first);
-    display(first);
+    int B[] = {15, 25, 35, 45, 55};
+    create2(B, 5);
+
+    // t1 = first->next->next;
+    // t2=first->next->next->next->next;
+    // t2->next=t1;
+    printf("%d\n", isLoop(first));
 
     return 0;
 }
