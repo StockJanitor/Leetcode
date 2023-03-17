@@ -27,6 +27,8 @@ void create(int A[], int n)
         t = (struct Node *)malloc(sizeof(struct Node));
         // assign current data
         t->data = A[i];
+
+        // t will be last, so next to last is NULL
         t->next = NULL;
 
         // current last's next will be t,
