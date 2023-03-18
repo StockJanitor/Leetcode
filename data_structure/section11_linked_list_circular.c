@@ -55,6 +55,43 @@ void display_recursive(struct Node *h)
     }
     flag = 0;
 }
+
+void insert(struct Node *p, int index, int x)
+{
+    struct Node *t;
+    int i;
+    // check if index is 0
+    if (index == 0)
+    {
+        // initialize new node
+        t = (struct Node *)malloc(sizeof(struct Node));
+        // assign data
+        t->data = x;
+
+        // if head is NULL then itself is head and last
+        if (Head == NULL)
+        {
+            Head = t;
+            Head->next = Head;
+        }
+        // else, t will be last->next, t->next will be head, and t becomes head
+        else
+        {
+            while (p->next != Head)
+            {
+                p = p->next;
+                p->next = t;
+                t->next = Head;
+                Head = t;
+            }
+        }
+    }
+    // else if index is not 0,
+    else
+    {
+    }
+}
+
 int main()
 {
     int A[] = {2, 3, 4, 5, 6};
