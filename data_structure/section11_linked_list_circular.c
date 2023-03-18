@@ -35,6 +35,16 @@ void create(int A[], int n)
         last = t;
     }
 }
+int length(struct Node *p)
+{
+    int len = 0;
+    do
+    {
+        len++;
+        p = p->next;
+    } while (p != Head);
+    return len;
+}
 
 void display(struct Node *h)
 {
@@ -43,6 +53,7 @@ void display(struct Node *h)
         printf("%d ", h->data);
         h = h->next;
     } while (h != Head);
+    printf("\n");
 }
 void display_recursive(struct Node *h)
 {
@@ -60,6 +71,12 @@ void insert(struct Node *p, int index, int x)
 {
     struct Node *t;
     int i;
+
+    // check if index is valid
+    if (index < 0)
+    {
+        return;
+    }
     // check if index is 0
     if (index == 0)
     {
@@ -86,9 +103,20 @@ void insert(struct Node *p, int index, int x)
             }
         }
     }
-    // else if index is not 0,
+    // else if index is not 0, insert at index
     else
     {
+        // find previous node
+        for (i = 0; i < index - 1; i++)
+        {
+            p = p->next;
+        }
+        t = (struct Node *)malloc(sizeof(struct Node));
+        t->data = x;
+        // t->next will be previous node->next
+        t->next = p->next;
+        // previous node->next will be t
+        p->next = t;
     }
 }
 
@@ -96,6 +124,8 @@ int main()
 {
     int A[] = {2, 3, 4, 5, 6};
     create(A, 5);
-    display_recursive(Head);
+    display(Head);
+    insert(Head, 3, 10);
+    display(Head);
     return 0;
 }
