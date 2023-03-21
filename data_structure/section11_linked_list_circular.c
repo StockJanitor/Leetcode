@@ -35,6 +35,7 @@ void create(int A[], int n)
         last = t;
     }
 }
+
 int length(struct Node *p)
 {
     int len = 0;
@@ -55,6 +56,7 @@ void display(struct Node *h)
     } while (h != Head);
     printf("\n");
 }
+
 void display_recursive(struct Node *h)
 {
     static int flag = 0;
@@ -65,6 +67,62 @@ void display_recursive(struct Node *h)
         display_recursive(h->next);
     }
     flag = 0;
+}
+
+int delete(struct Node *p, int index)
+{
+    struct Node *q;
+    int i,x;
+    // if index is not valid, return 0
+    if (index < 0 || index>length(Head))
+    {
+        return -1;
+    }
+    // if index is 1,
+    if(index==1)
+    {
+        // move to last node
+        while(p->next != Head)
+        {
+            p=p->next;
+        }
+        // assign head data
+        x=Head->data;
+
+        // check if last node is head, free head
+        if(Head==p)
+        {
+
+            free(Head);
+            Head =NULL;
+        }
+        // if last is not head, last->next assign head->next
+        else
+        {
+            p->next=Head->next;
+            free(Head);
+            Head=p->next;
+        }
+    }
+    else
+    {
+        // move to previous Node
+        for (i=0;i<index-2;i++)
+        {
+            p=p->next;
+        }
+        // assign to the index Node
+        q=p->next;
+        // p-next will be after index Node
+        p->next=q->next;
+        // assign data into x
+        x=q->data;
+        // free q
+        free(q);
+
+    }
+    // return x value
+    return x;
 }
 
 void insert(struct Node *p, int index, int x)
@@ -126,6 +184,7 @@ int main()
     create(A, 5);
     display(Head);
     insert(Head, 3, 10);
+    delete(Head, 3);
     display(Head);
     return 0;
 }
