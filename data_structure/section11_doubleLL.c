@@ -1,12 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 struct Node
 {
     struct Node *prev;
     int data;
     struct Node *next;
 }*first=NULL;
+
+
 
 void create(int A[],int n)
 {
@@ -93,13 +96,63 @@ int delete(struct Node * p, int index)
 {
     struct Node *q;
     int x=-1,i;
-    if (index <1)
+    if (index < 1||index>length(p))
     {
-        
+        return -1;
     }
+
+    if (index == 1)
+    {
+        // assign first to next
+        first = first->next;
+        // if next node exist,
+        if (first)
+        {
+            // prev node assign NULL
+            first->prev=NULL;
+        }
+        // assign the data for us to return
+        x=p->data;
+        // free p/ delete p
+        free(p);
+    }
+    else
+    {
+        // move p to the index node
+        for(i=0;i<index-1;i++)
+        {
+            p=p->next;
+        }
+        // the previous node points to next node
+        p->prev->next = p->next;
+        // if next node exist, next's previous should be previous
+        if(p->next)
+        {
+            p->next->prev = p->prev;
+        }
+        // assign current data
+        x = p->data;
+        // delete current node
+        free(p);
+    }
+    return x;
 }
 
-
+void reverse(struct Node *p)
+{
+    struct Node *temp;
+    while(p!=NULL)
+    {
+        temp = p->next;
+        p->next = p->prev;
+        p->prev = temp;
+        p=p->prev;
+        if(p!=NULL && p->next ==NULL)
+        {
+            first = p;
+        }
+    }
+}
 
 
 int main()
@@ -109,8 +162,12 @@ int main()
     printf("\nLength is : %d\n",length(first));
     
     insert(first,2,25);
-    
+    delete(first, 3);
+    reverse(first);
     display(first);
 
     return 0;
 }
+
+
+
