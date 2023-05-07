@@ -372,18 +372,20 @@ struct Array *Difference(struct Array *arr1, struct Array *arr2)
 
 int main()
 {
-    struct Array arr1 = {{2, 6, 10, 15, 25}, 10, 5};
-    struct Array arr2 = {{3, 6, 7, 15, 20}, 10, 5};
-    struct Array *arr3;
+    // struct Array arr1 = {{2, 6, 10, 15, 25}, 10, 5};
+    // struct Array arr2 = {{3, 6, 7, 15, 20}, 10, 5};
+    // struct Array *arr3;
     int A[5] = {2, 3, 4, 5, 6};
+    int *ptr = A;
     // printf("%d\n", isSorted(arr));
+    printf("%d", *ptr);
 
     // Set(&arr, 4,5);
     // Rearrange(&arr);
 
-    arr3 = Difference(&arr1, &arr2);
+    // arr3 = Difference(&arr1, &arr2);
 
-    Display(*arr3);
+    // Display(*arr3);
 
     return 0;
 }

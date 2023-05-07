@@ -1,6 +1,6 @@
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        # creating matrix of 
+        # creating matrix of m by n 
         dp = [[1]*m]*n
 
         # start from 1,1
