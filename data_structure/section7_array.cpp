@@ -1,3 +1,11 @@
+/*
+array 
+linear search takes O(n)
+binary search takes O(log n) 
+- starts in the middle and then break down into parts, famous for log n time
+
+*/
+
 #include <stdio.h>
 #include <iostream>
 using namespace std;

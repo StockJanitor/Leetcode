@@ -1,3 +1,11 @@
+/*
+linked list 
+linear search takes O(n)
+binary search takes O(n log n)
+
+*/
+
+
 #include <iostream>
 // test github commit
 class Node
