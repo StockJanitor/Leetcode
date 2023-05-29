@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 struct Node
 {
@@ -46,9 +47,22 @@ void Display(struct Node *p)
     printf("\n");
 }
 
+long Eval(struct Node *p, int x)
+{
+    long val = 0;
+    while (p)
+    {
+        val += p->coeff * pow(x, p->exp);
+        p = p->next;
+    }
+    return val;
+}
+
 int main()
 {
     create();
     Display(poly);
+    printf("%ld\n", Eval(poly, 1));
+
     return 0;
 }
